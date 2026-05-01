@@ -1,0 +1,23 @@
+name: repdb_example_flutter
+description: "Flutter starter that browses 21 fitness exercises from the RepDB preview dataset."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.5
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/exercises.json
+    - assets/images/flat/
