@@ -54,8 +54,6 @@ translations, alternative & progression relations), see
 - [repdb-example-nextjs](https://github.com/sergei-argutin/repdb-example-nextjs)
 - [repdb-example-react-native](https://github.com/sergei-argutin/repdb-example-react-native)
 
-> Note: at first push these URLs may 404 until the sister repos ship.
-
 ## License
 
 MIT for the example code (`LICENSE`). Bundle data under CC-BY-NC 4.0
