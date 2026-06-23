@@ -190,7 +190,7 @@ class _Footer extends StatelessWidget {
                 color: theme.colorScheme.onSurfaceVariant,
               ),
               children: [
-                const TextSpan(text: 'Want the full 300+ exercise catalog? '),
+                const TextSpan(text: 'Want the full 400+ exercise catalog? '),
                 TextSpan(
                   text: 'See pricing →',
                   style: TextStyle(
