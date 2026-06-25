@@ -19,6 +19,7 @@ class Exercise {
   final List<String> instructionsEs;
   final Map<String, List<String>> images;
   final bool animation;
+  final double? met;
 
   Exercise._({
     required this.id,
@@ -36,6 +37,7 @@ class Exercise {
     required this.instructionsEs,
     required this.images,
     required this.animation,
+    this.met,
   });
 
   factory Exercise.fromJson(Map<String, dynamic> j) {
@@ -68,6 +70,7 @@ class Exercise {
       instructionsEs: strList(j['instructions_es']),
       images: images,
       animation: j['animation'] == true,
+      met: (j['met'] as num?)?.toDouble(),
     );
   }
 
@@ -95,12 +98,17 @@ class Exercise {
     }
   }
 
-  /// Asset path for a flat-style start/peak frame, or null if unavailable.
-  String? imagePath(String variant) {
-    final flat = images['flat'];
-    if (flat == null || !flat.contains(variant)) return null;
-    return 'assets/images/flat/$id-$variant.webp';
+  /// Asset path for a start/peak frame in the given style ('flat' = white
+  /// background, 'classic' = transparent matte-clay), or null if unavailable.
+  String? imagePath(String variant, {String style = 'flat'}) {
+    final list = images[style];
+    if (list == null || !list.contains(variant)) return null;
+    return 'assets/images/$style/$id-$variant.webp';
   }
+
+  /// True when both flat and classic stills exist (style toggle is meaningful).
+  bool get hasBothStyles =>
+      (images['flat']?.isNotEmpty ?? false) && (images['classic']?.isNotEmpty ?? false);
 
   /// Asset path for the looping animated WebP, or null if this exercise
   /// has none. Flutter's Image widget auto-plays multi-frame WebP natively.

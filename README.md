@@ -9,6 +9,8 @@ the [RepDB](https://repdb.co) preview dataset.
 - In-memory search (substring match across name, body part, equipment)
 - Detail screen with a looping animated WebP (auto-played natively), start + peak
   frames, instructions, primary/secondary muscles
+- Flat ↔ classic visual-style toggle (white background vs transparent), MET, and
+  muscle / equipment icons with localized labels
 - Hero animation on the peak frame between catalog and detail
 - EN / DE / ES locale switch (translates exercise data — UI strings are EN)
 - Light + dark themes derived from a single seed color
