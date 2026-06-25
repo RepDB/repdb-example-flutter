@@ -21,3 +21,4 @@ flutter:
   assets:
     - assets/exercises.json
     - assets/images/flat/
+    - assets/images/animations/

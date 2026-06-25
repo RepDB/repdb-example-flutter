@@ -15,6 +15,7 @@ class DetailScreen extends StatelessWidget {
     final instructions = exercise.instructions(locale);
     final start = exercise.imagePath('start');
     final peak = exercise.imagePath('peak');
+    final animation = exercise.animationPath;
 
     return Scaffold(
       appBar: AppBar(
@@ -38,6 +39,16 @@ class DetailScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
+          // Looping animation (auto-plays — Flutter decodes animated WebP natively)
+          if (animation != null) ...[
+            _Frame(
+              label: 'Animation · looping',
+              assetPath: animation,
+              alt: '$name — animation',
+              heroTag: null,
+            ),
+            const SizedBox(height: 12),
+          ],
           // Hero start/peak frames
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,

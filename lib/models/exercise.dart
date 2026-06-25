@@ -18,6 +18,7 @@ class Exercise {
   final List<String> instructionsDe;
   final List<String> instructionsEs;
   final Map<String, List<String>> images;
+  final bool animation;
 
   Exercise._({
     required this.id,
@@ -34,6 +35,7 @@ class Exercise {
     required this.instructionsDe,
     required this.instructionsEs,
     required this.images,
+    required this.animation,
   });
 
   factory Exercise.fromJson(Map<String, dynamic> j) {
@@ -65,6 +67,7 @@ class Exercise {
       instructionsDe: strList(j['instructions_de']),
       instructionsEs: strList(j['instructions_es']),
       images: images,
+      animation: j['animation'] == true,
     );
   }
 
@@ -98,6 +101,11 @@ class Exercise {
     if (flat == null || !flat.contains(variant)) return null;
     return 'assets/images/flat/$id-$variant.webp';
   }
+
+  /// Asset path for the looping animated WebP, or null if this exercise
+  /// has none. Flutter's Image widget auto-plays multi-frame WebP natively.
+  String? get animationPath =>
+      animation ? 'assets/images/animations/$id.webp' : null;
 
   /// Substring match used by the catalog search bar.
   bool matchesQuery(String q) {
