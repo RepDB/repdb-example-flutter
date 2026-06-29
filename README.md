@@ -54,6 +54,7 @@ multilingual translations, alternative & progression relations), see
 
 ## Sister demos
 
+- [**exercise-dataset**](https://github.com/sergei-argutin/exercise-dataset) — the raw dataset (JSON + classic/flat WebP), browsable [live viewer](https://sergei-argutin.github.io/exercise-dataset/)
 - [repdb-example-nextjs](https://github.com/sergei-argutin/repdb-example-nextjs)
 - [repdb-example-react-native](https://github.com/sergei-argutin/repdb-example-react-native)
 
