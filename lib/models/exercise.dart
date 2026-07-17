@@ -1,8 +1,14 @@
-/// A single exercise from the RepDB preview bundle.
+/// A single exercise from the RepDB free bundle.
 ///
 /// We deliberately keep this typed-but-thin: the bundle's JSON is loaded
 /// once at app start and read directly. No code generation, no codegen
 /// runner — easy to fork.
+///
+/// The free tier ships **flat** (white-background) stills only. Two visual
+/// styles, transparent backgrounds and animations are Standard-tier extras;
+/// this demo previews them for a handful of `Bundle.sampleSlugs` exercises
+/// via `assets/images/samples/` (see the detail screen's "Standard tier
+/// preview" block).
 class Exercise {
   final String id;
   final String nameEn;
@@ -17,8 +23,16 @@ class Exercise {
   final List<String> instructionsEn;
   final List<String> instructionsDe;
   final List<String> instructionsEs;
+
+  /// Available image variants per style, e.g. `{"flat": ["start", "peak"]}`.
+  /// A single-pose exercise ships `{"flat": ["main"]}`.
   final Map<String, List<String>> images;
-  final bool animation;
+
+  /// Some variations (e.g. `pause-deadlift`) reuse a base exercise's images
+  /// instead of shipping duplicates. When set, image asset paths resolve
+  /// against this base slug rather than [id].
+  final String? imageAlias;
+
   final double? met;
 
   Exercise._({
@@ -36,7 +50,7 @@ class Exercise {
     required this.instructionsDe,
     required this.instructionsEs,
     required this.images,
-    required this.animation,
+    this.imageAlias,
     this.met,
   });
 
@@ -69,7 +83,7 @@ class Exercise {
       instructionsDe: strList(j['instructions_de']),
       instructionsEs: strList(j['instructions_es']),
       images: images,
-      animation: j['animation'] == true,
+      imageAlias: j['image_alias'] as String?,
       met: (j['met'] as num?)?.toDouble(),
     );
   }
@@ -98,22 +112,37 @@ class Exercise {
     }
   }
 
-  /// Asset path for a start/peak frame in the given style ('flat' = white
-  /// background, 'classic' = transparent matte-clay), or null if unavailable.
-  String? imagePath(String variant, {String style = 'flat'}) {
-    final list = images[style];
-    if (list == null || !list.contains(variant)) return null;
-    return 'assets/images/$style/$id-$variant.webp';
+  /// Slug the flat image assets are actually named after (resolves
+  /// [imageAlias] so aliased variations point at their base exercise's files).
+  String get imageBaseId => imageAlias ?? id;
+
+  /// The flat variants this exercise ships: `['start', 'peak']`, or `['main']`
+  /// for a single-pose exercise.
+  List<String> get flatVariants => images['flat'] ?? const [];
+
+  /// Asset path for a flat (white-background) frame, or null if that variant
+  /// isn't shipped for this exercise.
+  String? imagePath(String variant) {
+    if (!flatVariants.contains(variant)) return null;
+    return 'assets/images/flat/$imageBaseId-$variant.webp';
   }
 
-  /// True when both flat and classic stills exist (style toggle is meaningful).
-  bool get hasBothStyles =>
-      (images['flat']?.isNotEmpty ?? false) && (images['classic']?.isNotEmpty ?? false);
+  /// A single representative flat frame — peak, else the lone `main`, else
+  /// start. Used for the catalog card and hero. Null only if no flat art.
+  String? get heroImagePath =>
+      imagePath('peak') ?? imagePath('main') ?? imagePath('start');
 
-  /// Asset path for the looping animated WebP, or null if this exercise
-  /// has none. Flutter's Image widget auto-plays multi-frame WebP natively.
-  String? get animationPath =>
-      animation ? 'assets/images/animations/$id.webp' : null;
+  /// True when this exercise ships a single `main` pose rather than
+  /// start + peak (47 of the 400 free exercises).
+  bool get isSinglePose => flatVariants.length == 1 && flatVariants.first == 'main';
+
+  /// Asset path for a Standard-tier sample frame (transparent matte-clay
+  /// preview). Only valid for [Bundle.sampleSlugs]; those are never aliased.
+  String samplePath(String variant) => 'assets/images/samples/$id-$variant.webp';
+
+  /// Asset path for a Standard-tier looping animation preview. Only valid for
+  /// [Bundle.sampleAnimationSlugs]. Flutter decodes animated WebP natively.
+  String get sampleAnimationPath => 'assets/images/samples/$id.webp';
 
   /// Substring match used by the catalog search bar.
   bool matchesQuery(String q) {

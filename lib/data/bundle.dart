@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart' show AssetManifest, rootBundle;
 import '../models/exercise.dart';
 
 /// A muscle or equipment entry from the bundle taxonomy.
@@ -36,11 +36,23 @@ class Bundle {
     required this.exercises,
     required this.muscles,
     required this.equipment,
+    required this.sampleSlugs,
+    required this.sampleAnimationSlugs,
   });
 
   final List<Exercise> exercises;
   final Map<String, TaxonomyEntry> muscles;
   final Map<String, TaxonomyEntry> equipment;
+
+  /// Slugs that ship Standard-tier still previews under
+  /// `assets/images/samples/` (`<slug>-start.webp` / `<slug>-peak.webp`).
+  /// Derived from the bundled assets — the single source of truth, so the
+  /// detail screen's premium block never hardcodes the list.
+  final Set<String> sampleSlugs;
+
+  /// Subset of [sampleSlugs] that also ship a looping animation preview
+  /// (`<slug>.webp` with no `-start`/`-peak` suffix).
+  final Set<String> sampleAnimationSlugs;
 
   static Bundle? _cached;
 
@@ -54,6 +66,27 @@ class Bundle {
         MapEntry(k.toString(), TaxonomyEntry.fromJson(v as Map<String, dynamic>)));
   }
 
+  /// Scans the bundled `assets/images/samples/` directory once so the set of
+  /// "Standard tier preview" exercises is derived, never duplicated in code.
+  static Future<(Set<String>, Set<String>)> _sampleSets() async {
+    const dir = 'assets/images/samples/';
+    final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
+    final stills = <String>{};
+    final animations = <String>{};
+    for (final key in manifest.listAssets()) {
+      if (!key.startsWith(dir) || !key.endsWith('.webp')) continue;
+      final name = key.substring(dir.length, key.length - '.webp'.length);
+      if (name.endsWith('-start')) {
+        stills.add(name.substring(0, name.length - '-start'.length));
+      } else if (name.endsWith('-peak')) {
+        stills.add(name.substring(0, name.length - '-peak'.length));
+      } else {
+        animations.add(name); // bare "<slug>.webp" → looping animation
+      }
+    }
+    return (stills, animations);
+  }
+
   static Future<Bundle> load() async {
     if (_cached != null) return _cached!;
     final raw = await rootBundle.loadString('assets/exercises.json');
@@ -61,10 +94,13 @@ class Bundle {
     final list = (json['exercises'] as List)
         .map((e) => Exercise.fromJson(e as Map<String, dynamic>))
         .toList();
+    final (stills, animations) = await _sampleSets();
     _cached = Bundle._(
       exercises: list,
       muscles: _taxonomy(json['muscles']),
       equipment: _taxonomy(json['equipment']),
+      sampleSlugs: stills,
+      sampleAnimationSlugs: animations,
     );
     return _cached!;
   }

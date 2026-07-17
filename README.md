@@ -1,16 +1,19 @@
 # RepDB Example — Flutter
 
-A small Flutter (Material 3) starter that browses 21 fitness exercises from
-the [RepDB](https://repdb.co) preview dataset.
+A small Flutter (Material 3) starter that browses **400 fitness exercises**
+from the [RepDB free-tier dataset](https://repdb.co/free-exercise-dataset).
 
 ## Features
 
 - Responsive grid catalog with 2/3/4 columns based on viewport
 - In-memory search (substring match across name, body part, equipment)
-- Detail screen with a looping animated WebP (auto-played natively), start + peak
-  frames, instructions, primary/secondary muscles
-- Flat ↔ classic visual-style toggle (white background vs transparent), MET, and
-  muscle / equipment icons with localized labels
+- Detail screen with flat start/peak frames (or a single-pose "main" frame),
+  instructions, primary/secondary muscles, MET, and muscle / equipment icons
+  with localized labels
+- Standard-tier teaser: five sample exercises (deadlift, squat, bench-press,
+  mountain-climbers, kettlebell-swing) show a **Flat / Standard** style toggle
+  and, for mountain-climbers, a looping animated WebP (auto-played natively) —
+  the paid-tier look, marked with a "Standard tier preview" badge
 - Hero animation on the peak frame between catalog and detail
 - EN / DE / ES locale switch (translates exercise data — UI strings are EN)
 - Light + dark themes derived from a single seed color
@@ -32,33 +35,49 @@ flutter build apk --debug
 ## What's vendored where
 
 ```
-assets/exercises.json       # the preview bundle
-assets/images/flat/*.webp   # 42 webp images (21 exercises × start/peak)
-LICENSE-preview.md          # CC-BY-NC for the bundle data
-LICENSE                     # MIT for the example code
+assets/exercises.json         # the free-tier bundle (400 exercises)
+assets/images/flat/*.webp     # 745 flat webp (start/peak pairs + single-pose "main")
+assets/images/muscles/*.webp  # 27 muscle icons
+assets/images/equipment/*.webp# 46 equipment icons
+assets/images/samples/*.webp  # paid-tier teaser stills + 1 animation (evaluation-only)
+LICENSE-free.md               # RepDB Free Tier License for the bundle data & images
+LICENSE                       # MIT for the example code
 ```
 
-`pubspec.yaml` registers `assets/exercises.json` and the entire
-`assets/images/flat/` directory; Flutter handles per-platform asset bundling
-for you.
+`pubspec.yaml` registers each of those directories; Flutter handles per-platform
+asset bundling for you. The five sample slugs are derived at load time from the
+`*-start.webp` files present in `assets/images/samples/` (see `Bundle` in
+`lib/data/bundle.dart`) — there's no hardcoded list.
 
-## Data
+## Data & license
 
-This demo uses the RepDB **preview** bundle: 21 hand-picked exercises under
-[CC-BY-NC 4.0](LICENSE-preview.md). For commercial use or the full dataset
-(400+ exercises with two visual styles, transparent backgrounds, animations,
-multilingual translations, alternative & progression relations), see
+This demo uses the RepDB **free tier**: a dated snapshot of 400 exercises with
+flat-style images, under the [RepDB Free Tier License](LICENSE-free.md).
+
+**Attribution required.** Keep a visible link — "Exercise data by RepDB
+(repdb.co)" — in your app's credits, README, or footer.
+
+**No generative-AI derivation.** The images may not be used as input, reference,
+or conditioning material for generative models (image-to-image, style transfer,
+fine-tuning, or similar). See term 5 of [LICENSE-free.md](LICENSE-free.md).
+
+**No redistribution as a dataset** — in-app use only. The `samples/` folder is
+evaluation-only and is not covered by the free-use grant.
+
+For the full, growing dataset with two visual styles, transparent backgrounds,
+animations, 1024px images, and multilingual data, see
 <https://repdb.co/pricing>.
 
 > Exercise data & images: RepDB (https://repdb.co)
 
 ## Sister demos
 
-- [**exercise-dataset**](https://github.com/sergei-argutin/exercise-dataset) — the raw dataset (JSON + classic/flat WebP), browsable [live viewer](https://sergei-argutin.github.io/exercise-dataset/)
+- [**exercise-dataset**](https://github.com/sergei-argutin/exercise-dataset) — the raw dataset (JSON + WebP), browsable [live viewer](https://sergei-argutin.github.io/exercise-dataset/)
 - [repdb-example-nextjs](https://github.com/sergei-argutin/repdb-example-nextjs)
 - [repdb-example-react-native](https://github.com/sergei-argutin/repdb-example-react-native)
 
 ## License
 
-MIT for the example code (`LICENSE`). Bundle data under CC-BY-NC 4.0
-(`LICENSE-preview.md`). PRs welcome — accessibility improvements especially.
+MIT for the example code (`LICENSE`). Bundle data & images under the
+[RepDB Free Tier License](LICENSE-free.md). PRs welcome — accessibility
+improvements especially.

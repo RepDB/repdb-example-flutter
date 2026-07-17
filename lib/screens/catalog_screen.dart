@@ -178,7 +178,7 @@ class _Footer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Exercise data & images: RepDB (https://repdb.co) — preview, CC-BY-NC 4.0.',
+            'Exercise data & images: RepDB (https://repdb.co) — free tier, attribution license.',
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),

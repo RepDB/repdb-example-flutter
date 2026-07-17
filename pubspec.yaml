@@ -1,5 +1,5 @@
 name: repdb_example_flutter
-description: "Flutter starter that browses 21 fitness exercises from the RepDB preview dataset."
+description: "Flutter starter that browses 400 fitness exercises from the RepDB free dataset."
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -21,7 +21,6 @@ flutter:
   assets:
     - assets/exercises.json
     - assets/images/flat/
-    - assets/images/classic/
-    - assets/images/animations/
+    - assets/images/samples/
     - assets/images/muscles/
     - assets/images/equipment/

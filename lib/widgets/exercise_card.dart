@@ -16,7 +16,7 @@ class ExerciseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final peakPath = exercise.imagePath('peak');
+    final peakPath = exercise.heroImagePath;
 
     return Card(
       clipBehavior: Clip.antiAlias,
