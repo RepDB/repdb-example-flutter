@@ -10,10 +10,9 @@ from the [RepDB free-tier dataset](https://repdb.co/free-exercise-dataset).
 - Detail screen with flat start/peak frames (or a single-pose "main" frame),
   instructions, primary/secondary muscles, MET, and muscle / equipment icons
   with localized labels
-- Standard-tier teaser: five sample exercises (deadlift, squat, bench-press,
-  mountain-climbers, kettlebell-swing) show a **Flat / Standard** style toggle
-  and, for mountain-climbers, a looping animated WebP (auto-played natively) —
-  the paid-tier look, marked with a "Standard tier preview" badge
+- Standard-tier teaser: a "Standard tier preview" gallery on the catalog screen
+  shows **5 looping animations** — the exact clips shown on repdb.co, auto-played
+  natively by `Image.asset` — badged "evaluation only" with a link to pricing
 - Hero animation on the peak frame between catalog and detail
 - EN / DE / ES locale switch (translates exercise data — UI strings are EN)
 - Light + dark themes derived from a single seed color
@@ -39,14 +38,14 @@ assets/exercises.json         # the free-tier bundle (400 exercises)
 assets/images/flat/*.webp     # 745 flat webp (start/peak pairs + single-pose "main")
 assets/images/muscles/*.webp  # 27 muscle icons
 assets/images/equipment/*.webp# 46 equipment icons
-assets/images/samples/*.webp  # paid-tier teaser stills + 1 animation (evaluation-only)
+assets/images/samples/*.webp  # 5 paid-tier looping animations (evaluation-only)
 LICENSE-free.md               # RepDB Free Tier License for the bundle data & images
 LICENSE                       # MIT for the example code
 ```
 
 `pubspec.yaml` registers each of those directories; Flutter handles per-platform
-asset bundling for you. The five sample slugs are derived at load time from the
-`*-start.webp` files present in `assets/images/samples/` (see `Bundle` in
+asset bundling for you. The five sample animations are derived at load time from
+the `.webp` files present in `assets/images/samples/` (see `Bundle` in
 `lib/data/bundle.dart`) — there's no hardcoded list.
 
 ## Data & license

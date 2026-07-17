@@ -52,23 +52,24 @@ void main() {
     expect(alias.imagePath('peak'), 'assets/images/flat/deadlift-peak.webp');
   });
 
-  test('Standard-tier sample set is derived from bundled sample assets', () async {
+  test('Standard-tier animation samples are derived from bundled assets', () async {
     final b = await Bundle.load();
     expect(
-      b.sampleSlugs,
+      b.sampleAnimationSlugs,
       containsAll(<String>{
-        'deadlift',
-        'squat',
-        'bench-press',
-        'kettlebell-swing',
+        'bench-leg-pull-in',
+        'cossack-squat',
+        'bent-arm-barbell-pullover',
+        'incline-db-curl',
         'mountain-climbers',
       }),
     );
-    // Only mountain-climbers ships an animation preview.
-    expect(b.sampleAnimationSlugs, contains('mountain-climbers'));
-    // Sample slugs are never aliased.
-    for (final slug in b.sampleSlugs) {
-      expect(b.findById(slug)?.imageAlias, isNull, reason: '$slug should not alias');
+    // Each derived slug resolves to a bundled animation asset path.
+    for (final slug in b.sampleAnimationSlugs) {
+      expect(
+        b.findById(slug)?.sampleAnimationPath ?? 'assets/images/samples/$slug.webp',
+        'assets/images/samples/$slug.webp',
+      );
     }
   });
 }

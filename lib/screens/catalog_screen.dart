@@ -155,7 +155,143 @@ class _CatalogScreenState extends State<CatalogScreen> {
                     },
                   ),
           ),
+          _SamplePreviewGallery(bundle: widget.bundle, locale: _locale),
           const _Footer(),
+        ],
+      ),
+    );
+  }
+}
+
+/// A standalone "Standard tier preview" strip: the 5 looping paid-tier
+/// animations (the exact clips shown on repdb.co), for evaluation only. The
+/// slug list is derived once from the bundled sample assets — never hardcoded.
+class _SamplePreviewGallery extends StatelessWidget {
+  const _SamplePreviewGallery({required this.bundle, required this.locale});
+
+  final Bundle bundle;
+  final String locale;
+
+  @override
+  Widget build(BuildContext context) {
+    final slugs = bundle.sampleAnimationSlugs;
+    if (slugs.isEmpty) return const SizedBox.shrink();
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(16, 12, 0, 12),
+      decoration: BoxDecoration(
+        color: scheme.primary.withValues(alpha: 0.06),
+        border: Border(top: BorderSide(color: scheme.outlineVariant)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: Row(
+              children: [
+                Icon(Icons.auto_awesome, size: 15, color: scheme.primary),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    'STANDARD TIER PREVIEW — EVALUATION ONLY',
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      letterSpacing: 0.8,
+                      fontWeight: FontWeight.w800,
+                      color: scheme.primary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 3),
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: Text(
+              'Looping animations — the exact clips shown on repdb.co. Every paid-tier '
+              'exercise ships one. Evaluation only, not for production use. '
+              'Full tiers: https://repdb.co/pricing',
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: scheme.onSurfaceVariant,
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          SizedBox(
+            height: 150,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: slugs.length,
+              padding: const EdgeInsets.only(right: 16),
+              separatorBuilder: (_, _) => const SizedBox(width: 12),
+              itemBuilder: (context, i) {
+                final slug = slugs[i];
+                final ex = bundle.findById(slug);
+                final label = ex != null ? ex.name(locale) : _prettySlug(slug);
+                return _SampleTile(
+                  assetPath: 'assets/images/samples/$slug.webp',
+                  label: label,
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  static String _prettySlug(String slug) => slug
+      .split('-')
+      .map((w) => w.isEmpty ? w : '${w[0].toUpperCase()}${w.substring(1)}')
+      .join(' ');
+}
+
+/// One looping animation tile. Flutter's Image.asset auto-plays multi-frame
+/// WebP natively, so no controller or extra package is needed.
+class _SampleTile extends StatelessWidget {
+  const _SampleTile({required this.assetPath, required this.label});
+
+  final String assetPath;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    return SizedBox(
+      width: 118,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 118,
+            height: 118,
+            decoration: BoxDecoration(
+              color: scheme.surfaceContainerHighest,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: scheme.outlineVariant),
+            ),
+            clipBehavior: Clip.antiAlias,
+            padding: const EdgeInsets.all(6),
+            child: Image.asset(
+              assetPath,
+              fit: BoxFit.contain,
+              semanticLabel: '$label — animation preview',
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            label,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: scheme.onSurfaceVariant,
+            ),
+          ),
         ],
       ),
     );

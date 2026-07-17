@@ -2,34 +2,19 @@ import 'package:flutter/material.dart';
 import '../data/bundle.dart';
 import '../models/exercise.dart';
 
-class DetailScreen extends StatefulWidget {
+class DetailScreen extends StatelessWidget {
   const DetailScreen({super.key, required this.exercise, required this.locale});
 
   final Exercise exercise;
   final String locale;
 
   @override
-  State<DetailScreen> createState() => _DetailScreenState();
-}
-
-class _DetailScreenState extends State<DetailScreen> {
-  // 'flat' = the shipped free-tier still; 'sample' = the Standard-tier
-  // transparent matte-clay preview (only offered for Bundle.sampleSlugs).
-  String _style = 'flat';
-
-  @override
   Widget build(BuildContext context) {
-    final exercise = widget.exercise;
-    final locale = widget.locale;
     final tax = Bundle.instance;
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final name = exercise.name(locale);
     final instructions = exercise.instructions(locale);
-
-    final isSample = tax.sampleSlugs.contains(exercise.id);
-    final hasSampleAnimation = tax.sampleAnimationSlugs.contains(exercise.id);
-    final showingSample = isSample && _style == 'sample';
 
     return Scaffold(
       appBar: AppBar(
@@ -59,30 +44,13 @@ class _DetailScreenState extends State<DetailScreen> {
             ],
           ),
           const SizedBox(height: 16),
-          // Standard-tier preview: the transparent matte-clay style toggle and
-          // looping animation are paid extras, previewed here for a handful of
-          // sample exercises (derived from assets/images/samples/).
-          if (isSample) ...[
-            _SamplePreviewBanner(),
-            const SizedBox(height: 12),
-            _StyleToggle(value: _style, onChanged: (s) => setState(() => _style = s)),
-            const SizedBox(height: 12),
-          ],
-          // Looping animation (auto-plays — Flutter decodes animated WebP natively)
-          if (showingSample && hasSampleAnimation) ...[
-            _Frame(
-              label: 'Animation · looping',
-              assetPath: exercise.sampleAnimationPath,
-              alt: '$name — animation',
-              heroTag: null,
-            ),
-            const SizedBox(height: 12),
-          ],
-          // Still frames: start + peak, or a lone "main" pose for single-pose
-          // exercises. The Standard preview always ships start + peak.
+          // Flat (white-background) still frames: start + peak, or a lone
+          // "main" pose for single-pose exercises. The free tier ships flat
+          // stills only — animations are a paid extra, previewed in the
+          // catalog screen's "Standard tier preview" gallery.
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: _frames(exercise, name, showingSample),
+            children: _frames(exercise, name),
           ),
           if (instructions.isNotEmpty) ...[
             const SizedBox(height: 24),
@@ -148,37 +116,15 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  /// Builds the still-frame children for the image row.
+  /// Builds the flat still-frame children for the image row.
   ///
-  /// - Standard preview → sample start + peak.
   /// - Single-pose free exercise (`{"flat": ["main"]}`) → one lone frame,
   ///   so the start/peak path never renders an empty box.
   /// - Otherwise → flat start + peak.
   ///
-  /// The peak (or the single main) frame carries the shared hero tag, but only
-  /// in flat mode — that's the image the catalog card animates into.
-  List<Widget> _frames(Exercise exercise, String name, bool showingSample) {
-    if (showingSample) {
-      return [
-        Expanded(
-          child: _Frame(
-            label: 'Start',
-            assetPath: exercise.samplePath('start'),
-            alt: '$name — start',
-            heroTag: null,
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: _Frame(
-            label: 'Peak',
-            assetPath: exercise.samplePath('peak'),
-            alt: '$name — peak',
-            heroTag: null,
-          ),
-        ),
-      ];
-    }
+  /// The peak (or the single main) frame carries the shared hero tag — that's
+  /// the image the catalog card animates into.
+  List<Widget> _frames(Exercise exercise, String name) {
     if (exercise.isSinglePose) {
       return [
         Expanded(
@@ -294,84 +240,6 @@ class _Tag extends StatelessWidget {
 
 /// Whole-number METs render without a trailing ".0".
 String _fmtMet(double v) => v == v.roundToDouble() ? v.toInt().toString() : v.toString();
-
-/// "Standard tier preview" badge + one line of context, shown above the style
-/// toggle for the handful of sample exercises.
-class _SamplePreviewBanner extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
-    return Container(
-      padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
-      decoration: BoxDecoration(
-        color: scheme.primary.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: scheme.primary.withValues(alpha: 0.35)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.auto_awesome, size: 15, color: scheme.primary),
-              const SizedBox(width: 6),
-              Text(
-                'STANDARD TIER PREVIEW',
-                style: theme.textTheme.labelSmall?.copyWith(
-                  letterSpacing: 1.0,
-                  fontWeight: FontWeight.w800,
-                  color: scheme.primary,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 6),
-          Text(
-            'Transparent matte-clay stills and looping animations are paid extras. '
-            'Toggle "Standard" to preview them for this exercise.',
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: scheme.onSurfaceVariant,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _StyleToggle extends StatelessWidget {
-  const _StyleToggle({required this.value, required this.onChanged});
-  final String value;
-  final ValueChanged<String> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Row(
-      children: [
-        Text(
-          'STYLE',
-          style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                letterSpacing: 1.0,
-                color: scheme.onSurfaceVariant,
-              ),
-        ),
-        const SizedBox(width: 10),
-        SegmentedButton<String>(
-          segments: const [
-            ButtonSegment(value: 'flat', label: Text('Flat')),
-            ButtonSegment(value: 'sample', label: Text('Standard')),
-          ],
-          selected: {value},
-          showSelectedIcon: false,
-          style: const ButtonStyle(visualDensity: VisualDensity.compact),
-          onSelectionChanged: (s) => onChanged(s.first),
-        ),
-      ],
-    );
-  }
-}
 
 class _MuscleWrap extends StatelessWidget {
   const _MuscleWrap({

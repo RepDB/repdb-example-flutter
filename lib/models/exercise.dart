@@ -4,11 +4,10 @@
 /// once at app start and read directly. No code generation, no codegen
 /// runner — easy to fork.
 ///
-/// The free tier ships **flat** (white-background) stills only. Two visual
-/// styles, transparent backgrounds and animations are Standard-tier extras;
-/// this demo previews them for a handful of `Bundle.sampleSlugs` exercises
-/// via `assets/images/samples/` (see the detail screen's "Standard tier
-/// preview" block).
+/// The free tier ships **flat** (white-background) stills only. Transparent
+/// backgrounds and looping animations are Standard-tier extras; this demo
+/// previews the latter via `assets/images/samples/` in the catalog screen's
+/// "Standard tier preview" gallery (see `Bundle.sampleAnimationSlugs`).
 class Exercise {
   final String id;
   final String nameEn;
@@ -135,10 +134,6 @@ class Exercise {
   /// True when this exercise ships a single `main` pose rather than
   /// start + peak (47 of the 400 free exercises).
   bool get isSinglePose => flatVariants.length == 1 && flatVariants.first == 'main';
-
-  /// Asset path for a Standard-tier sample frame (transparent matte-clay
-  /// preview). Only valid for [Bundle.sampleSlugs]; those are never aliased.
-  String samplePath(String variant) => 'assets/images/samples/$id-$variant.webp';
 
   /// Asset path for a Standard-tier looping animation preview. Only valid for
   /// [Bundle.sampleAnimationSlugs]. Flutter decodes animated WebP natively.
