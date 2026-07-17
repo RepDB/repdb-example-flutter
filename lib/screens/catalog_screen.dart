@@ -212,8 +212,8 @@ class _SamplePreviewGallery extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 16),
             child: Text(
-              'Looping animations — the exact clips shown on repdb.co. Every paid-tier '
-              'exercise ships one. Evaluation only, not for production use. '
+              'Looping animations — the exact clips shown on repdb.co. The Standard tier '
+              'adds one for most exercises. Evaluation only, not for production use. '
               'Full tiers: https://repdb.co/pricing',
               style: theme.textTheme.bodySmall?.copyWith(
                 color: scheme.onSurfaceVariant,
