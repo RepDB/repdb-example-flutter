@@ -56,13 +56,7 @@ void main() {
     final b = await Bundle.load();
     expect(
       b.sampleAnimationSlugs,
-      containsAll(<String>{
-        'bench-leg-pull-in',
-        'cossack-squat',
-        'bent-arm-barbell-pullover',
-        'incline-db-curl',
-        'mountain-climbers',
-      }),
+      containsAll(<String>{'bent-over-db-row'}),
     );
     // Each derived slug resolves to a bundled animation asset path.
     for (final slug in b.sampleAnimationSlugs) {

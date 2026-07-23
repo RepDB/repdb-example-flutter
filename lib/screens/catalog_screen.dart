@@ -163,9 +163,9 @@ class _CatalogScreenState extends State<CatalogScreen> {
   }
 }
 
-/// A standalone "Standard tier preview" strip: the 5 looping paid-tier
-/// animations (the exact clips shown on repdb.co), for evaluation only. The
-/// slug list is derived once from the bundled sample assets — never hardcoded.
+/// A standalone "Standard tier preview" strip: the looping paid-tier
+/// animation(s) (the exact clips shown on repdb.co). The slug list is derived
+/// once from the bundled sample assets — never hardcoded.
 class _SamplePreviewGallery extends StatelessWidget {
   const _SamplePreviewGallery({required this.bundle, required this.locale});
 
@@ -197,7 +197,7 @@ class _SamplePreviewGallery extends StatelessWidget {
                 const SizedBox(width: 6),
                 Expanded(
                   child: Text(
-                    'STANDARD TIER PREVIEW — EVALUATION ONLY',
+                    'STANDARD TIER PREVIEW',
                     style: theme.textTheme.labelSmall?.copyWith(
                       letterSpacing: 0.8,
                       fontWeight: FontWeight.w800,
@@ -212,9 +212,8 @@ class _SamplePreviewGallery extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 16),
             child: Text(
-              'Looping animations — the exact clips shown on repdb.co. The Standard tier '
-              'adds one for most exercises. Evaluation only, not for production use. '
-              'Full tiers: https://repdb.co/pricing',
+              'A looping animation — the exact clip shown on repdb.co. The Standard tier '
+              'adds one for most exercises. Full tiers: https://repdb.co/pricing',
               style: theme.textTheme.bodySmall?.copyWith(
                 color: scheme.onSurfaceVariant,
               ),

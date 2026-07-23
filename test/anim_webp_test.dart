@@ -9,11 +9,11 @@ import 'package:flutter_test/flutter_test.dart';
 // on this).
 void main() {
   test('sample animated webp decodes to >1 frame', () async {
-    final bytes = await File('assets/images/samples/mountain-climbers.webp')
+    final bytes = await File('assets/images/samples/bent-over-db-row.webp')
         .readAsBytes();
     final codec = await ui.instantiateImageCodec(bytes);
     // ignore: avoid_print
-    print('mountain-climbers.webp frameCount=${codec.frameCount}');
+    print('bent-over-db-row.webp frameCount=${codec.frameCount}');
     expect(codec.frameCount, greaterThan(1));
   });
 }
