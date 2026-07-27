@@ -35,7 +35,7 @@ flutter build apk --debug
 
 ```
 assets/exercises.json         # the free-tier bundle (400 exercises)
-assets/images/flat/*.webp     # 745 flat webp (start/peak pairs + single-pose "main")
+assets/images/flat/*.webp     # 741 flat webp (start/peak pairs + single-pose "main")
 assets/images/muscles/*.webp  # 27 muscle icons
 assets/images/equipment/*.webp# 46 equipment icons
 assets/images/samples/*.webp  # 1 paid-tier looping animation (Standard-tier preview)

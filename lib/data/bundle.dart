@@ -12,11 +12,11 @@ class TaxonomyEntry {
   final String? image;
 
   factory TaxonomyEntry.fromJson(Map<String, dynamic> j) => TaxonomyEntry(
-        nameEn: (j['name_en'] as String?) ?? '',
-        nameDe: j['name_de'] as String?,
-        nameEs: j['name_es'] as String?,
-        image: j['image'] as String?,
-      );
+    nameEn: (j['name_en'] as String?) ?? '',
+    nameDe: j['name_de'] as String?,
+    nameEs: j['name_es'] as String?,
+    image: j['image'] as String?,
+  );
 
   String label(String locale) {
     switch (locale) {
@@ -58,8 +58,12 @@ class Bundle {
 
   static Map<String, TaxonomyEntry> _taxonomy(dynamic raw) {
     if (raw is! Map) return const {};
-    return raw.map((k, v) =>
-        MapEntry(k.toString(), TaxonomyEntry.fromJson(v as Map<String, dynamic>)));
+    return raw.map(
+      (k, v) => MapEntry(
+        k.toString(),
+        TaxonomyEntry.fromJson(v as Map<String, dynamic>),
+      ),
+    );
   }
 
   /// Scans the bundled `assets/images/samples/` directory once so the set of
@@ -71,7 +75,9 @@ class Bundle {
     final animations = <String>[];
     for (final key in manifest.listAssets()) {
       if (!key.startsWith(dir) || !key.endsWith('.webp')) continue;
-      animations.add(key.substring(dir.length, key.length - '.webp'.length));
+      final slug = key.substring(dir.length, key.length - '.webp'.length);
+      if (RegExp(r'-(start|peak|main)$').hasMatch(slug)) continue;
+      animations.add(slug);
     }
     animations.sort();
     return animations;
