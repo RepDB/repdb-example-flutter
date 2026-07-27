@@ -21,10 +21,9 @@ class _CatalogScreenState extends State<CatalogScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final filtered = widget.bundle.exercises
-        .where((e) => e.matchesQuery(_query))
-        .toList()
-      ..sort((a, b) => a.name(_locale).compareTo(b.name(_locale)));
+    final filtered =
+        widget.bundle.exercises.where((e) => e.matchesQuery(_query)).toList()
+          ..sort((a, b) => a.name(_locale).compareTo(b.name(_locale)));
 
     return Scaffold(
       appBar: AppBar(
@@ -65,7 +64,10 @@ class _CatalogScreenState extends State<CatalogScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: SegmentedButton<String>(
               segments: _locales
-                  .map((l) => ButtonSegment(value: l, label: Text(l.toUpperCase())))
+                  .map(
+                    (l) =>
+                        ButtonSegment(value: l, label: Text(l.toUpperCase())),
+                  )
                   .toList(),
               selected: {_locale},
               onSelectionChanged: (s) => setState(() => _locale = s.first),
@@ -80,6 +82,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
       ),
       body: Column(
         children: [
+          _SamplePreviewGallery(bundle: widget.bundle, locale: _locale),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
             child: SearchBar(
@@ -115,7 +118,9 @@ class _CatalogScreenState extends State<CatalogScreen> {
                 ? Center(
                     child: Text(
                       'No exercises match "$_query"',
-                      style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
+                      style: TextStyle(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
                     ),
                   )
                 : LayoutBuilder(
@@ -123,8 +128,8 @@ class _CatalogScreenState extends State<CatalogScreen> {
                       final cols = constraints.maxWidth >= 1100
                           ? 4
                           : constraints.maxWidth >= 800
-                              ? 3
-                              : 2;
+                          ? 3
+                          : 2;
                       return GridView.builder(
                         padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -155,7 +160,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
                     },
                   ),
           ),
-          _SamplePreviewGallery(bundle: widget.bundle, locale: _locale),
           const _Footer(),
         ],
       ),
@@ -221,7 +225,7 @@ class _SamplePreviewGallery extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           SizedBox(
-            height: 150,
+            height: 164,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: slugs.length,
@@ -306,7 +310,9 @@ class _Footer extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
       decoration: BoxDecoration(
-        border: Border(top: BorderSide(color: theme.colorScheme.outlineVariant)),
+        border: Border(
+          top: BorderSide(color: theme.colorScheme.outlineVariant),
+        ),
       ),
       width: double.infinity,
       child: Column(
