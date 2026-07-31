@@ -1,7 +1,7 @@
 # RepDB Example — Flutter
 
 A small Flutter (Material 3) starter that browses **400 fitness exercises**
-from the [RepDB free-tier dataset](https://repdb.co/free-exercise-dataset).
+from the [RepDB free-tier dataset](https://exercise-dataset.com/).
 
 ## Features
 
@@ -64,7 +64,7 @@ fine-tuning, or similar). See term 5 of [LICENSE-free.md](LICENSE-free.md).
 
 For the full, growing dataset with two visual styles, transparent backgrounds,
 animations, 1024px images, and multilingual data, see
-<https://repdb.co/pricing>.
+<https://repdb.co/pricing?utm_source=github-flutter>.
 
 > Exercise data & images: RepDB (https://repdb.co)
 
