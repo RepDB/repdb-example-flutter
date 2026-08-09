@@ -1,5 +1,5 @@
 name: repdb_example_flutter
-description: "Flutter starter that browses 400 fitness exercises from the RepDB free dataset."
+description: "Flutter starter that browses 250 fitness exercises from the RepDB free dataset."
 publish_to: 'none'
 version: 1.0.0+1
 

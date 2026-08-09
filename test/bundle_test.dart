@@ -9,10 +9,10 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   test(
-    'bundle loads 400 exercises, taxonomy, met and localized labels',
+    'bundle loads 250 exercises, taxonomy, met and localized labels',
     () async {
       final b = await Bundle.load();
-      expect(b.exercises.length, 400);
+      expect(b.exercises.length, 250);
       expect(b.muscles, isNotEmpty);
       expect(b.equipment, isNotEmpty);
 
