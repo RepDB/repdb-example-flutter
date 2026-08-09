@@ -70,9 +70,9 @@ animations, 1024px images, and multilingual data, see
 
 ## Sister demos
 
-- [**exercise-dataset**](https://github.com/sergei-argutin/exercise-dataset) — the raw dataset (JSON + WebP), browsable [live viewer](https://exercise-dataset.com/)
-- [repdb-example-nextjs](https://github.com/sergei-argutin/repdb-example-nextjs)
-- [repdb-example-react-native](https://github.com/sergei-argutin/repdb-example-react-native)
+- [**exercise-dataset**](https://github.com/RepDB/exercise-dataset) — the raw dataset (JSON + WebP), browsable [live viewer](https://exercise-dataset.com/)
+- [repdb-example-nextjs](https://github.com/RepDB/repdb-example-nextjs)
+- [repdb-example-react-native](https://github.com/RepDB/repdb-example-react-native)
 
 ## License
 
