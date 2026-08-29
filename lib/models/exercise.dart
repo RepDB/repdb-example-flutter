@@ -132,7 +132,7 @@ class Exercise {
       imagePath('peak') ?? imagePath('main') ?? imagePath('start');
 
   /// True when this exercise ships a single `main` pose rather than
-  /// start + peak (215 of the 250 free exercises).
+  /// start + peak.
   bool get isSinglePose => flatVariants.length == 1 && flatVariants.first == 'main';
 
   /// Asset path for a Standard-tier looping animation preview. Only valid for

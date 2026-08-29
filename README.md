@@ -1,7 +1,7 @@
 # RepDB Example — Flutter
 
-A small Flutter (Material 3) starter that browses **250 fitness exercises**
-from the [RepDB free-tier dataset](https://exercise-dataset.com/).
+A small Flutter (Material 3) starter that browses the current fully
+illustrated [RepDB free-tier dataset](https://exercise-dataset.com/).
 
 ## Features
 
@@ -34,8 +34,8 @@ flutter build apk --debug
 ## What's vendored where
 
 ```
-assets/exercises.json         # the free-tier bundle (250 exercises)
-assets/images/flat/*.webp     # 459 flat webp (start/peak pairs + single-pose "main")
+assets/exercises.json         # the public flat-edition bundle
+assets/images/flat/*.webp     # flat WebP (start/peak pairs + single-pose "main")
 assets/images/muscles/*.webp  # 27 muscle icons
 assets/images/equipment/*.webp# 46 equipment icons
 assets/images/samples/*.webp  # 1 paid-tier looping animation (Standard-tier preview)
@@ -50,8 +50,9 @@ the `.webp` files present in `assets/images/samples/` (see `Bundle` in
 
 ## Data & license
 
-This demo uses the RepDB **free tier**: a dated snapshot of 250 exercises with
-flat-style images, under the [RepDB Free Tier License](LICENSE-free.md).
+This demo uses the RepDB **free tier**: every fully illustrated exercise in
+the current catalog with flat-style images, under the
+[RepDB Free Tier License](LICENSE-free.md).
 
 **Attribution required.** Keep a visible link — "Exercise data by RepDB
 (repdb.co)" — in your app's credits, README, or footer.
@@ -62,8 +63,8 @@ fine-tuning, or similar). See term 5 of [LICENSE-free.md](LICENSE-free.md).
 
 **No redistribution as a dataset** — in-app use only.
 
-For the full, growing dataset with two visual styles, transparent backgrounds,
-animations, 1024px images, and multilingual data, see
+For classic images, transparent backgrounds, animations, 1024px assets, and a
+commercial license without attribution, see
 <https://repdb.co/pricing?utm_source=github-flutter>.
 
 > Exercise data & images: RepDB (https://repdb.co)

@@ -331,7 +331,7 @@ class _Footer extends StatelessWidget {
                 color: theme.colorScheme.onSurfaceVariant,
               ),
               children: [
-                const TextSpan(text: 'Want the full, growing catalog? '),
+                const TextSpan(text: 'Want premium assets and licensing? '),
                 TextSpan(
                   text: 'See pricing →',
                   style: TextStyle(
