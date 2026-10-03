@@ -3,7 +3,7 @@ import 'package:repdb_example_flutter/data/bundle.dart';
 
 // Exercises the data layer behind the free-tier detail screen: bundle size,
 // taxonomy parsing, MET, flat image paths (start/peak, single-pose "main",
-// aliased variations), the derived Standard-tier sample sets, and localized
+// per-exercise files), the derived Standard-tier sample sets, and localized
 // labels + icon paths.
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -56,13 +56,19 @@ void main() {
     expect(single.imagePath('start'), isNull);
   });
 
-  test('aliased variations resolve image paths to their base slug', () async {
+  test('variations carry their own image files (no image_alias)', () async {
+    // Since 2026-09 the bundle ships a full file set per exercise instead of
+    // aliasing variations onto a base slug; the alias fallback in the model
+    // stays for older bundles but must not be needed here.
     final b = await Bundle.load();
-    final alias = b.findById('pause-deadlift');
-    expect(alias, isNotNull);
-    expect(alias!.imageAlias, 'deadlift');
-    expect(alias.imageBaseId, 'deadlift');
-    expect(alias.imagePath('peak'), 'assets/images/flat/deadlift-peak.webp');
+    final v = b.findById('pause-deadlift');
+    expect(v, isNotNull);
+    expect(v!.imageAlias, isNull);
+    expect(v.imageBaseId, 'pause-deadlift');
+    expect(
+      v.imagePath('peak'),
+      'assets/images/flat/pause-deadlift-peak.webp',
+    );
   });
 
   test(

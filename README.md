@@ -34,10 +34,10 @@ flutter build apk --debug
 ## What's vendored where
 
 ```
-assets/exercises.json         # the public flat-edition bundle
+assets/exercises.json         # the public flat-edition bundle (609 exercises, EN/DE/ES)
 assets/images/flat/*.webp     # flat WebP (start/peak pairs + single-pose "main")
 assets/images/muscles/*.webp  # 27 muscle icons
-assets/images/equipment/*.webp# 46 equipment icons
+assets/images/equipment/*.webp# 61 equipment icons
 assets/images/samples/*.webp  # 1 paid-tier looping animation (Standard-tier preview)
 LICENSE-free.md               # RepDB Free Tier License for the bundle data & images
 LICENSE                       # MIT for the example code
@@ -63,8 +63,8 @@ fine-tuning, or similar). See term 5 of [LICENSE-free.md](LICENSE-free.md).
 
 **No redistribution as a dataset** — in-app use only.
 
-For classic images, transparent backgrounds, animations, 1024px assets, and a
-commercial license without attribution, see
+For French content, classic images, transparent backgrounds, animations, a female
+character add-on, 1024px assets, and a commercial license without attribution, see
 <https://repdb.co/pricing?utm_source=github-flutter>.
 
 > Exercise data & images: RepDB (https://repdb.co)
