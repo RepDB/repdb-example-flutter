@@ -1,7 +1,14 @@
-# RepDB Example — Flutter
+# Flutter fitness app starter with a free exercise database
 
-A small Flutter (Material 3) starter that browses the current fully
-illustrated [RepDB free-tier dataset](https://exercise-dataset.com/).
+A small Flutter (Material 3) app that browses and searches 700+ exercises from the
+free [RepDB exercise dataset](https://github.com/RepDB/exercise-dataset):
+illustrations, target muscles, equipment, instructions and MET values in English,
+German and Spanish. No API key: the data ships as app assets. Fork it as the
+exercise library of your workout app.
+
+Want motion? The catalog screen plays one looping exercise animation from RepDB
+Standard; more are in the
+[animation gallery](https://repdb.co/exercise-animations/?utm_source=github-flutter).
 
 ## Features
 
@@ -34,10 +41,10 @@ flutter build apk --debug
 ## What's vendored where
 
 ```
-assets/exercises.json         # the public flat-edition bundle (701 exercises, EN/DE/ES)
+assets/exercises.json         # the public flat-edition bundle (every free exercise, EN/DE/ES)
 assets/images/flat/*.webp     # flat WebP (start/peak pairs + single-pose "main")
-assets/images/muscles/*.webp  # 27 muscle icons
-assets/images/equipment/*.webp# 61 equipment icons
+assets/images/muscles/*.webp  # muscle icons
+assets/images/equipment/*.webp# equipment icons
 assets/images/samples/*.webp  # 1 paid-tier looping animation (Standard-tier preview)
 LICENSE-free.md               # RepDB Free Tier License for the bundle data & images
 LICENSE                       # MIT for the example code
